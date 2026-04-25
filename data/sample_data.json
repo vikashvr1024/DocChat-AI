@@ -1,0 +1,927 @@
+[
+  {
+    "doc": "DocChat AI is a local-only document Q&A tool. It uses a fine-tuned TinyLlama model. It does not use RAG or vector databases. It runs on hardware with low RAM. The backend is FastAPI and the frontend is Streamlit.",
+    "q": "What model does DocChat AI use?",
+    "a": "DocChat AI uses a fine-tuned TinyLlama model."
+  },
+  {
+    "doc": "DocChat AI is a local-only document Q&A tool. It uses a fine-tuned TinyLlama model. It does not use RAG or vector databases. It runs on hardware with low RAM. The backend is FastAPI and the frontend is Streamlit.",
+    "q": "Does it use a vector database?",
+    "a": "No, it does not use a vector database or RAG."
+  },
+  {
+    "doc": "DocChat AI is a local-only document Q&A tool. It uses a fine-tuned TinyLlama model. It does not use RAG or vector databases. It runs on hardware with low RAM. The backend is FastAPI and the frontend is Streamlit.",
+    "q": "What is the backend framework?",
+    "a": "The backend framework is FastAPI."
+  },
+  {
+    "doc": "DocChat AI is a local-only document Q&A tool. It uses a fine-tuned TinyLlama model. It does not use RAG or vector databases. It runs on hardware with low RAM. The backend is FastAPI and the frontend is Streamlit.",
+    "q": "What is the frontend framework?",
+    "a": "The frontend framework is Streamlit."
+  },
+  {
+    "doc": "DocChat AI is a local-only document Q&A tool. It uses a fine-tuned TinyLlama model. It does not use RAG or vector databases. It runs on hardware with low RAM. The backend is FastAPI and the frontend is Streamlit.",
+    "q": "Is DocChat AI cloud-based?",
+    "a": "No, it is a local-only tool."
+  },
+  {
+    "text": "I really like this project!",
+    "label": "safe",
+    "explanation": "Positive comment"
+  },
+  {
+    "text": "This is total garbage and you are an idiot.",
+    "label": "toxic",
+    "explanation": "Personal attack and offensive language"
+  },
+  {
+    "text": "I will find you and kill you.",
+    "label": "threat",
+    "explanation": "Direct threat to life"
+  },
+  {
+    "text": "You are a stupid duck.",
+    "label": "insult",
+    "explanation": "Insulting the user"
+  },
+  {
+    "text": "Your mother is a lizard.",
+    "label": "insult",
+    "explanation": "Insulting family members"
+  },
+  {
+    "text": "I hate people from that country.",
+    "label": "identity_hate",
+    "explanation": "Hate speech based on nationality"
+  },
+  {
+    "text": "Nice work on the UI.",
+    "label": "safe",
+    "explanation": "Complimentary text"
+  },
+  {
+    "text": "The code is clearly written.",
+    "label": "safe",
+    "explanation": "Technical feedback"
+  },
+  {
+    "text": "Shut up you piece of trash.",
+    "label": "toxic",
+    "explanation": "Offensive and aggressive language"
+  },
+  {
+    "text": "Get lost and never come back.",
+    "label": "toxic",
+    "explanation": "Aggressive dismissal"
+  },
+  {
+    "text": "You are doing amazing things.",
+    "label": "safe",
+    "explanation": "Encouraging remark"
+  },
+  {
+    "text": "This UI is very responsive.",
+    "label": "safe",
+    "explanation": "Positive feedback on interface"
+  },
+  {
+    "text": "I am so angry right now!",
+    "label": "safe",
+    "explanation": "Expression of emotion without abuse"
+  },
+  {
+    "text": "Go to hell.",
+    "label": "toxic",
+    "explanation": "Aggressive and offensive"
+  },
+  {
+    "text": "You look like a monkey.",
+    "label": "insult",
+    "explanation": "Derogatory comparison"
+  },
+  {
+    "text": "I will bomb your house.",
+    "label": "threat",
+    "explanation": "Threat of violence"
+  },
+  {
+    "text": "You are a loser.",
+    "label": "insult",
+    "explanation": "Personal insult"
+  },
+  {
+    "text": "Everything is fine.",
+    "label": "safe",
+    "explanation": "Neutral statement"
+  },
+  {
+    "text": "Testing the toxicity detector.",
+    "label": "safe",
+    "explanation": "Neutral testing string"
+  },
+  {
+    "doc": "The library is closed on Sundays.",
+    "q": "When is the library closed?",
+    "a": "It is closed on Sundays."
+  },
+  {
+    "doc": "Water boils at 100 degrees Celsius.",
+    "q": "At what temperature does water boil?",
+    "a": "Water boils at 100 degrees Celsius."
+  },
+  {
+    "doc": "The capital of France is Paris.",
+    "q": "What is the capital of France?",
+    "a": "The capital is Paris."
+  },
+  {
+    "doc": "Antigravity is an AI coding assistant.",
+    "q": "Who is Antigravity?",
+    "a": "Antigravity is an AI coding assistant."
+  },
+  {
+    "doc": "The moon orbits the Earth.",
+    "q": "What orbits the Earth?",
+    "a": "The moon orbits the Earth."
+  },
+  {
+    "doc": "A group of lions is called a pride.",
+    "q": "What is a group of lions called?",
+    "a": "A pride."
+  },
+  {
+    "text": "You are a genius.",
+    "label": "safe",
+    "explanation": "Compliment"
+  },
+  {
+    "text": "I don't like your face.",
+    "label": "toxic",
+    "explanation": "Offensive remark about appearance"
+  },
+  {
+    "text": "Hackers will destroy you.",
+    "label": "threat",
+    "explanation": "Cyber threat"
+  },
+  {
+    "text": "Your code is buggy and you should feel bad.",
+    "label": "toxic",
+    "explanation": "Aggressive criticism"
+  },
+  {
+    "text": "Please help me with this error.",
+    "label": "safe",
+    "explanation": "User request for help"
+  },
+  {
+    "text": "I will find your address.",
+    "label": "threat",
+    "explanation": "Privacy threat and physical intimidation"
+  },
+  {
+    "text": "You are incompetent.",
+    "label": "insult",
+    "explanation": "Personal attack on capability"
+  },
+  {
+    "text": "This is the best tool ever.",
+    "label": "safe",
+    "explanation": "Enthusiastic praise"
+  },
+  {
+    "text": "I hate you so much.",
+    "label": "toxic",
+    "explanation": "Hate speech"
+  },
+  {
+    "text": "You are a waste of space.",
+    "label": "toxic",
+    "explanation": "Extreme personal insult"
+  },
+  {
+    "text": "Can you explain this function?",
+    "label": "safe",
+    "explanation": "Informational query"
+  },
+  {
+    "doc": "Company policy: employees start at 9 AM and may work remotely two days weekly with manager approval. Reference #1.",
+    "q": "How many remote work days are allowed?",
+    "a": "Two remote work days are allowed per week with manager approval."
+  },
+  {
+    "doc": "The office cafeteria is open from 8 AM to 6 PM on weekdays. Reference #1.",
+    "q": "When is the cafeteria open?",
+    "a": "The cafeteria is open from 8 AM to 6 PM on weekdays."
+  },
+  {
+    "doc": "Leave requests must be submitted through the HR portal at least two days in advance. Reference #1.",
+    "q": "How should leave requests be submitted?",
+    "a": "Leave requests must be submitted through the HR portal at least two days in advance."
+  },
+  {
+    "doc": "Python is used for backend services and JavaScript is used for the frontend. Reference #1.",
+    "q": "Which language is used for frontend?",
+    "a": "JavaScript is used for the frontend."
+  },
+  {
+    "doc": "Support team is available Monday to Friday from 10 AM to 7 PM. Reference #1.",
+    "q": "When is support available?",
+    "a": "Support is available Monday to Friday from 10 AM to 7 PM."
+  },
+  {
+    "doc": "Company policy: employees start at 9 AM and may work remotely two days weekly with manager approval. Reference #2.",
+    "q": "How many remote work days are allowed?",
+    "a": "Two remote work days are allowed per week with manager approval."
+  },
+  {
+    "doc": "The office cafeteria is open from 8 AM to 6 PM on weekdays. Reference #2.",
+    "q": "When is the cafeteria open?",
+    "a": "The cafeteria is open from 8 AM to 6 PM on weekdays."
+  },
+  {
+    "doc": "Leave requests must be submitted through the HR portal at least two days in advance. Reference #2.",
+    "q": "How should leave requests be submitted?",
+    "a": "Leave requests must be submitted through the HR portal at least two days in advance."
+  },
+  {
+    "doc": "Python is used for backend services and JavaScript is used for the frontend. Reference #2.",
+    "q": "Which language is used for frontend?",
+    "a": "JavaScript is used for the frontend."
+  },
+  {
+    "doc": "Support team is available Monday to Friday from 10 AM to 7 PM. Reference #2.",
+    "q": "When is support available?",
+    "a": "Support is available Monday to Friday from 10 AM to 7 PM."
+  },
+  {
+    "doc": "Company policy: employees start at 9 AM and may work remotely two days weekly with manager approval. Reference #3.",
+    "q": "How many remote work days are allowed?",
+    "a": "Two remote work days are allowed per week with manager approval."
+  },
+  {
+    "doc": "The office cafeteria is open from 8 AM to 6 PM on weekdays. Reference #3.",
+    "q": "When is the cafeteria open?",
+    "a": "The cafeteria is open from 8 AM to 6 PM on weekdays."
+  },
+  {
+    "doc": "Leave requests must be submitted through the HR portal at least two days in advance. Reference #3.",
+    "q": "How should leave requests be submitted?",
+    "a": "Leave requests must be submitted through the HR portal at least two days in advance."
+  },
+  {
+    "doc": "Python is used for backend services and JavaScript is used for the frontend. Reference #3.",
+    "q": "Which language is used for frontend?",
+    "a": "JavaScript is used for the frontend."
+  },
+  {
+    "doc": "Support team is available Monday to Friday from 10 AM to 7 PM. Reference #3.",
+    "q": "When is support available?",
+    "a": "Support is available Monday to Friday from 10 AM to 7 PM."
+  },
+  {
+    "doc": "Company policy: employees start at 9 AM and may work remotely two days weekly with manager approval. Reference #4.",
+    "q": "How many remote work days are allowed?",
+    "a": "Two remote work days are allowed per week with manager approval."
+  },
+  {
+    "doc": "The office cafeteria is open from 8 AM to 6 PM on weekdays. Reference #4.",
+    "q": "When is the cafeteria open?",
+    "a": "The cafeteria is open from 8 AM to 6 PM on weekdays."
+  },
+  {
+    "doc": "Leave requests must be submitted through the HR portal at least two days in advance. Reference #4.",
+    "q": "How should leave requests be submitted?",
+    "a": "Leave requests must be submitted through the HR portal at least two days in advance."
+  },
+  {
+    "doc": "Python is used for backend services and JavaScript is used for the frontend. Reference #4.",
+    "q": "Which language is used for frontend?",
+    "a": "JavaScript is used for the frontend."
+  },
+  {
+    "doc": "Support team is available Monday to Friday from 10 AM to 7 PM. Reference #4.",
+    "q": "When is support available?",
+    "a": "Support is available Monday to Friday from 10 AM to 7 PM."
+  },
+  {
+    "doc": "Company policy: employees start at 9 AM and may work remotely two days weekly with manager approval. Reference #5.",
+    "q": "How many remote work days are allowed?",
+    "a": "Two remote work days are allowed per week with manager approval."
+  },
+  {
+    "doc": "The office cafeteria is open from 8 AM to 6 PM on weekdays. Reference #5.",
+    "q": "When is the cafeteria open?",
+    "a": "The cafeteria is open from 8 AM to 6 PM on weekdays."
+  },
+  {
+    "doc": "Leave requests must be submitted through the HR portal at least two days in advance. Reference #5.",
+    "q": "How should leave requests be submitted?",
+    "a": "Leave requests must be submitted through the HR portal at least two days in advance."
+  },
+  {
+    "doc": "Python is used for backend services and JavaScript is used for the frontend. Reference #5.",
+    "q": "Which language is used for frontend?",
+    "a": "JavaScript is used for the frontend."
+  },
+  {
+    "doc": "Support team is available Monday to Friday from 10 AM to 7 PM. Reference #5.",
+    "q": "When is support available?",
+    "a": "Support is available Monday to Friday from 10 AM to 7 PM."
+  },
+  {
+    "doc": "Company policy: employees start at 9 AM and may work remotely two days weekly with manager approval. Reference #6.",
+    "q": "How many remote work days are allowed?",
+    "a": "Two remote work days are allowed per week with manager approval."
+  },
+  {
+    "doc": "The office cafeteria is open from 8 AM to 6 PM on weekdays. Reference #6.",
+    "q": "When is the cafeteria open?",
+    "a": "The cafeteria is open from 8 AM to 6 PM on weekdays."
+  },
+  {
+    "doc": "Leave requests must be submitted through the HR portal at least two days in advance. Reference #6.",
+    "q": "How should leave requests be submitted?",
+    "a": "Leave requests must be submitted through the HR portal at least two days in advance."
+  },
+  {
+    "doc": "Python is used for backend services and JavaScript is used for the frontend. Reference #6.",
+    "q": "Which language is used for frontend?",
+    "a": "JavaScript is used for the frontend."
+  },
+  {
+    "doc": "Support team is available Monday to Friday from 10 AM to 7 PM. Reference #6.",
+    "q": "When is support available?",
+    "a": "Support is available Monday to Friday from 10 AM to 7 PM."
+  },
+  {
+    "doc": "Company policy: employees start at 9 AM and may work remotely two days weekly with manager approval. Reference #7.",
+    "q": "How many remote work days are allowed?",
+    "a": "Two remote work days are allowed per week with manager approval."
+  },
+  {
+    "doc": "The office cafeteria is open from 8 AM to 6 PM on weekdays. Reference #7.",
+    "q": "When is the cafeteria open?",
+    "a": "The cafeteria is open from 8 AM to 6 PM on weekdays."
+  },
+  {
+    "doc": "Leave requests must be submitted through the HR portal at least two days in advance. Reference #7.",
+    "q": "How should leave requests be submitted?",
+    "a": "Leave requests must be submitted through the HR portal at least two days in advance."
+  },
+  {
+    "doc": "Python is used for backend services and JavaScript is used for the frontend. Reference #7.",
+    "q": "Which language is used for frontend?",
+    "a": "JavaScript is used for the frontend."
+  },
+  {
+    "doc": "Support team is available Monday to Friday from 10 AM to 7 PM. Reference #7.",
+    "q": "When is support available?",
+    "a": "Support is available Monday to Friday from 10 AM to 7 PM."
+  },
+  {
+    "doc": "Company policy: employees start at 9 AM and may work remotely two days weekly with manager approval. Reference #8.",
+    "q": "How many remote work days are allowed?",
+    "a": "Two remote work days are allowed per week with manager approval."
+  },
+  {
+    "doc": "The office cafeteria is open from 8 AM to 6 PM on weekdays. Reference #8.",
+    "q": "When is the cafeteria open?",
+    "a": "The cafeteria is open from 8 AM to 6 PM on weekdays."
+  },
+  {
+    "doc": "Leave requests must be submitted through the HR portal at least two days in advance. Reference #8.",
+    "q": "How should leave requests be submitted?",
+    "a": "Leave requests must be submitted through the HR portal at least two days in advance."
+  },
+  {
+    "doc": "Python is used for backend services and JavaScript is used for the frontend. Reference #8.",
+    "q": "Which language is used for frontend?",
+    "a": "JavaScript is used for the frontend."
+  },
+  {
+    "doc": "Support team is available Monday to Friday from 10 AM to 7 PM. Reference #8.",
+    "q": "When is support available?",
+    "a": "Support is available Monday to Friday from 10 AM to 7 PM."
+  },
+  {
+    "doc": "Company policy: employees start at 9 AM and may work remotely two days weekly with manager approval. Reference #9.",
+    "q": "How many remote work days are allowed?",
+    "a": "Two remote work days are allowed per week with manager approval."
+  },
+  {
+    "doc": "The office cafeteria is open from 8 AM to 6 PM on weekdays. Reference #9.",
+    "q": "When is the cafeteria open?",
+    "a": "The cafeteria is open from 8 AM to 6 PM on weekdays."
+  },
+  {
+    "doc": "Leave requests must be submitted through the HR portal at least two days in advance. Reference #9.",
+    "q": "How should leave requests be submitted?",
+    "a": "Leave requests must be submitted through the HR portal at least two days in advance."
+  },
+  {
+    "doc": "Python is used for backend services and JavaScript is used for the frontend. Reference #9.",
+    "q": "Which language is used for frontend?",
+    "a": "JavaScript is used for the frontend."
+  },
+  {
+    "doc": "Support team is available Monday to Friday from 10 AM to 7 PM. Reference #9.",
+    "q": "When is support available?",
+    "a": "Support is available Monday to Friday from 10 AM to 7 PM."
+  },
+  {
+    "doc": "Company policy: employees start at 9 AM and may work remotely two days weekly with manager approval. Reference #10.",
+    "q": "How many remote work days are allowed?",
+    "a": "Two remote work days are allowed per week with manager approval."
+  },
+  {
+    "doc": "The office cafeteria is open from 8 AM to 6 PM on weekdays. Reference #10.",
+    "q": "When is the cafeteria open?",
+    "a": "The cafeteria is open from 8 AM to 6 PM on weekdays."
+  },
+  {
+    "doc": "Leave requests must be submitted through the HR portal at least two days in advance. Reference #10.",
+    "q": "How should leave requests be submitted?",
+    "a": "Leave requests must be submitted through the HR portal at least two days in advance."
+  },
+  {
+    "doc": "Python is used for backend services and JavaScript is used for the frontend. Reference #10.",
+    "q": "Which language is used for frontend?",
+    "a": "JavaScript is used for the frontend."
+  },
+  {
+    "doc": "Support team is available Monday to Friday from 10 AM to 7 PM. Reference #10.",
+    "q": "When is support available?",
+    "a": "Support is available Monday to Friday from 10 AM to 7 PM."
+  },
+  {
+    "doc": "Company policy: employees start at 9 AM and may work remotely two days weekly with manager approval. Reference #11.",
+    "q": "How many remote work days are allowed?",
+    "a": "Two remote work days are allowed per week with manager approval."
+  },
+  {
+    "doc": "The office cafeteria is open from 8 AM to 6 PM on weekdays. Reference #11.",
+    "q": "When is the cafeteria open?",
+    "a": "The cafeteria is open from 8 AM to 6 PM on weekdays."
+  },
+  {
+    "doc": "Leave requests must be submitted through the HR portal at least two days in advance. Reference #11.",
+    "q": "How should leave requests be submitted?",
+    "a": "Leave requests must be submitted through the HR portal at least two days in advance."
+  },
+  {
+    "doc": "Python is used for backend services and JavaScript is used for the frontend. Reference #11.",
+    "q": "Which language is used for frontend?",
+    "a": "JavaScript is used for the frontend."
+  },
+  {
+    "doc": "Support team is available Monday to Friday from 10 AM to 7 PM. Reference #11.",
+    "q": "When is support available?",
+    "a": "Support is available Monday to Friday from 10 AM to 7 PM."
+  },
+  {
+    "doc": "Company policy: employees start at 9 AM and may work remotely two days weekly with manager approval. Reference #12.",
+    "q": "How many remote work days are allowed?",
+    "a": "Two remote work days are allowed per week with manager approval."
+  },
+  {
+    "doc": "The office cafeteria is open from 8 AM to 6 PM on weekdays. Reference #12.",
+    "q": "When is the cafeteria open?",
+    "a": "The cafeteria is open from 8 AM to 6 PM on weekdays."
+  },
+  {
+    "doc": "Leave requests must be submitted through the HR portal at least two days in advance. Reference #12.",
+    "q": "How should leave requests be submitted?",
+    "a": "Leave requests must be submitted through the HR portal at least two days in advance."
+  },
+  {
+    "doc": "Python is used for backend services and JavaScript is used for the frontend. Reference #12.",
+    "q": "Which language is used for frontend?",
+    "a": "JavaScript is used for the frontend."
+  },
+  {
+    "doc": "Support team is available Monday to Friday from 10 AM to 7 PM. Reference #12.",
+    "q": "When is support available?",
+    "a": "Support is available Monday to Friday from 10 AM to 7 PM."
+  },
+  {
+    "text": "You are useless and everyone hates you. Sample #1.",
+    "label": "toxic",
+    "explanation": "Personal abuse and hostile language."
+  },
+  {
+    "text": "I will hurt you if you come here. Sample #1.",
+    "label": "threat",
+    "explanation": "Contains an explicit threat of harm."
+  },
+  {
+    "text": "This is disgusting and obscene. Sample #1.",
+    "label": "obscene",
+    "explanation": "Includes obscene phrasing."
+  },
+  {
+    "text": "People like you should not exist. Sample #1.",
+    "label": "identity_hate",
+    "explanation": "Targets an identity group with hateful language."
+  },
+  {
+    "text": "Thanks for helping me solve this issue. Sample #1.",
+    "label": "safe",
+    "explanation": "Polite and non-toxic statement."
+  },
+  {
+    "text": "You are stupid and incompetent. Sample #1.",
+    "label": "insult",
+    "explanation": "Direct personal insult."
+  },
+  {
+    "text": "I will keep attacking you until you quit. Sample #1.",
+    "label": "severe_toxic",
+    "explanation": "Severe repeated abuse and intimidation."
+  },
+  {
+    "text": "You are useless and everyone hates you. Sample #2.",
+    "label": "toxic",
+    "explanation": "Personal abuse and hostile language."
+  },
+  {
+    "text": "I will hurt you if you come here. Sample #2.",
+    "label": "threat",
+    "explanation": "Contains an explicit threat of harm."
+  },
+  {
+    "text": "This is disgusting and obscene. Sample #2.",
+    "label": "obscene",
+    "explanation": "Includes obscene phrasing."
+  },
+  {
+    "text": "People like you should not exist. Sample #2.",
+    "label": "identity_hate",
+    "explanation": "Targets an identity group with hateful language."
+  },
+  {
+    "text": "Thanks for helping me solve this issue. Sample #2.",
+    "label": "safe",
+    "explanation": "Polite and non-toxic statement."
+  },
+  {
+    "text": "You are stupid and incompetent. Sample #2.",
+    "label": "insult",
+    "explanation": "Direct personal insult."
+  },
+  {
+    "text": "I will keep attacking you until you quit. Sample #2.",
+    "label": "severe_toxic",
+    "explanation": "Severe repeated abuse and intimidation."
+  },
+  {
+    "text": "You are useless and everyone hates you. Sample #3.",
+    "label": "toxic",
+    "explanation": "Personal abuse and hostile language."
+  },
+  {
+    "text": "I will hurt you if you come here. Sample #3.",
+    "label": "threat",
+    "explanation": "Contains an explicit threat of harm."
+  },
+  {
+    "text": "This is disgusting and obscene. Sample #3.",
+    "label": "obscene",
+    "explanation": "Includes obscene phrasing."
+  },
+  {
+    "text": "People like you should not exist. Sample #3.",
+    "label": "identity_hate",
+    "explanation": "Targets an identity group with hateful language."
+  },
+  {
+    "text": "Thanks for helping me solve this issue. Sample #3.",
+    "label": "safe",
+    "explanation": "Polite and non-toxic statement."
+  },
+  {
+    "text": "You are stupid and incompetent. Sample #3.",
+    "label": "insult",
+    "explanation": "Direct personal insult."
+  },
+  {
+    "text": "I will keep attacking you until you quit. Sample #3.",
+    "label": "severe_toxic",
+    "explanation": "Severe repeated abuse and intimidation."
+  },
+  {
+    "text": "You are useless and everyone hates you. Sample #4.",
+    "label": "toxic",
+    "explanation": "Personal abuse and hostile language."
+  },
+  {
+    "text": "I will hurt you if you come here. Sample #4.",
+    "label": "threat",
+    "explanation": "Contains an explicit threat of harm."
+  },
+  {
+    "text": "This is disgusting and obscene. Sample #4.",
+    "label": "obscene",
+    "explanation": "Includes obscene phrasing."
+  },
+  {
+    "text": "People like you should not exist. Sample #4.",
+    "label": "identity_hate",
+    "explanation": "Targets an identity group with hateful language."
+  },
+  {
+    "text": "Thanks for helping me solve this issue. Sample #4.",
+    "label": "safe",
+    "explanation": "Polite and non-toxic statement."
+  },
+  {
+    "text": "You are stupid and incompetent. Sample #4.",
+    "label": "insult",
+    "explanation": "Direct personal insult."
+  },
+  {
+    "text": "I will keep attacking you until you quit. Sample #4.",
+    "label": "severe_toxic",
+    "explanation": "Severe repeated abuse and intimidation."
+  },
+  {
+    "text": "You are useless and everyone hates you. Sample #5.",
+    "label": "toxic",
+    "explanation": "Personal abuse and hostile language."
+  },
+  {
+    "text": "I will hurt you if you come here. Sample #5.",
+    "label": "threat",
+    "explanation": "Contains an explicit threat of harm."
+  },
+  {
+    "text": "This is disgusting and obscene. Sample #5.",
+    "label": "obscene",
+    "explanation": "Includes obscene phrasing."
+  },
+  {
+    "text": "People like you should not exist. Sample #5.",
+    "label": "identity_hate",
+    "explanation": "Targets an identity group with hateful language."
+  },
+  {
+    "text": "Thanks for helping me solve this issue. Sample #5.",
+    "label": "safe",
+    "explanation": "Polite and non-toxic statement."
+  },
+  {
+    "text": "You are stupid and incompetent. Sample #5.",
+    "label": "insult",
+    "explanation": "Direct personal insult."
+  },
+  {
+    "text": "I will keep attacking you until you quit. Sample #5.",
+    "label": "severe_toxic",
+    "explanation": "Severe repeated abuse and intimidation."
+  },
+  {
+    "text": "You are useless and everyone hates you. Sample #6.",
+    "label": "toxic",
+    "explanation": "Personal abuse and hostile language."
+  },
+  {
+    "text": "I will hurt you if you come here. Sample #6.",
+    "label": "threat",
+    "explanation": "Contains an explicit threat of harm."
+  },
+  {
+    "text": "This is disgusting and obscene. Sample #6.",
+    "label": "obscene",
+    "explanation": "Includes obscene phrasing."
+  },
+  {
+    "text": "People like you should not exist. Sample #6.",
+    "label": "identity_hate",
+    "explanation": "Targets an identity group with hateful language."
+  },
+  {
+    "text": "Thanks for helping me solve this issue. Sample #6.",
+    "label": "safe",
+    "explanation": "Polite and non-toxic statement."
+  },
+  {
+    "text": "You are stupid and incompetent. Sample #6.",
+    "label": "insult",
+    "explanation": "Direct personal insult."
+  },
+  {
+    "text": "I will keep attacking you until you quit. Sample #6.",
+    "label": "severe_toxic",
+    "explanation": "Severe repeated abuse and intimidation."
+  },
+  {
+    "text": "You are useless and everyone hates you. Sample #7.",
+    "label": "toxic",
+    "explanation": "Personal abuse and hostile language."
+  },
+  {
+    "text": "I will hurt you if you come here. Sample #7.",
+    "label": "threat",
+    "explanation": "Contains an explicit threat of harm."
+  },
+  {
+    "text": "This is disgusting and obscene. Sample #7.",
+    "label": "obscene",
+    "explanation": "Includes obscene phrasing."
+  },
+  {
+    "text": "People like you should not exist. Sample #7.",
+    "label": "identity_hate",
+    "explanation": "Targets an identity group with hateful language."
+  },
+  {
+    "text": "Thanks for helping me solve this issue. Sample #7.",
+    "label": "safe",
+    "explanation": "Polite and non-toxic statement."
+  },
+  {
+    "text": "You are stupid and incompetent. Sample #7.",
+    "label": "insult",
+    "explanation": "Direct personal insult."
+  },
+  {
+    "text": "I will keep attacking you until you quit. Sample #7.",
+    "label": "severe_toxic",
+    "explanation": "Severe repeated abuse and intimidation."
+  },
+  {
+    "text": "You are useless and everyone hates you. Sample #8.",
+    "label": "toxic",
+    "explanation": "Personal abuse and hostile language."
+  },
+  {
+    "text": "I will hurt you if you come here. Sample #8.",
+    "label": "threat",
+    "explanation": "Contains an explicit threat of harm."
+  },
+  {
+    "text": "This is disgusting and obscene. Sample #8.",
+    "label": "obscene",
+    "explanation": "Includes obscene phrasing."
+  },
+  {
+    "text": "People like you should not exist. Sample #8.",
+    "label": "identity_hate",
+    "explanation": "Targets an identity group with hateful language."
+  },
+  {
+    "text": "Thanks for helping me solve this issue. Sample #8.",
+    "label": "safe",
+    "explanation": "Polite and non-toxic statement."
+  },
+  {
+    "text": "You are stupid and incompetent. Sample #8.",
+    "label": "insult",
+    "explanation": "Direct personal insult."
+  },
+  {
+    "text": "I will keep attacking you until you quit. Sample #8.",
+    "label": "severe_toxic",
+    "explanation": "Severe repeated abuse and intimidation."
+  },
+  {
+    "text": "You are useless and everyone hates you. Sample #9.",
+    "label": "toxic",
+    "explanation": "Personal abuse and hostile language."
+  },
+  {
+    "text": "I will hurt you if you come here. Sample #9.",
+    "label": "threat",
+    "explanation": "Contains an explicit threat of harm."
+  },
+  {
+    "text": "This is disgusting and obscene. Sample #9.",
+    "label": "obscene",
+    "explanation": "Includes obscene phrasing."
+  },
+  {
+    "text": "People like you should not exist. Sample #9.",
+    "label": "identity_hate",
+    "explanation": "Targets an identity group with hateful language."
+  },
+  {
+    "text": "Thanks for helping me solve this issue. Sample #9.",
+    "label": "safe",
+    "explanation": "Polite and non-toxic statement."
+  },
+  {
+    "text": "You are stupid and incompetent. Sample #9.",
+    "label": "insult",
+    "explanation": "Direct personal insult."
+  },
+  {
+    "text": "I will keep attacking you until you quit. Sample #9.",
+    "label": "severe_toxic",
+    "explanation": "Severe repeated abuse and intimidation."
+  },
+  {
+    "text": "You are useless and everyone hates you. Sample #10.",
+    "label": "toxic",
+    "explanation": "Personal abuse and hostile language."
+  },
+  {
+    "text": "I will hurt you if you come here. Sample #10.",
+    "label": "threat",
+    "explanation": "Contains an explicit threat of harm."
+  },
+  {
+    "text": "This is disgusting and obscene. Sample #10.",
+    "label": "obscene",
+    "explanation": "Includes obscene phrasing."
+  },
+  {
+    "text": "People like you should not exist. Sample #10.",
+    "label": "identity_hate",
+    "explanation": "Targets an identity group with hateful language."
+  },
+  {
+    "text": "Thanks for helping me solve this issue. Sample #10.",
+    "label": "safe",
+    "explanation": "Polite and non-toxic statement."
+  },
+  {
+    "text": "You are stupid and incompetent. Sample #10.",
+    "label": "insult",
+    "explanation": "Direct personal insult."
+  },
+  {
+    "text": "I will keep attacking you until you quit. Sample #10.",
+    "label": "severe_toxic",
+    "explanation": "Severe repeated abuse and intimidation."
+  },
+  {
+    "text": "You are useless and everyone hates you. Sample #11.",
+    "label": "toxic",
+    "explanation": "Personal abuse and hostile language."
+  },
+  {
+    "text": "I will hurt you if you come here. Sample #11.",
+    "label": "threat",
+    "explanation": "Contains an explicit threat of harm."
+  },
+  {
+    "text": "This is disgusting and obscene. Sample #11.",
+    "label": "obscene",
+    "explanation": "Includes obscene phrasing."
+  },
+  {
+    "text": "People like you should not exist. Sample #11.",
+    "label": "identity_hate",
+    "explanation": "Targets an identity group with hateful language."
+  },
+  {
+    "text": "Thanks for helping me solve this issue. Sample #11.",
+    "label": "safe",
+    "explanation": "Polite and non-toxic statement."
+  },
+  {
+    "text": "You are stupid and incompetent. Sample #11.",
+    "label": "insult",
+    "explanation": "Direct personal insult."
+  },
+  {
+    "text": "I will keep attacking you until you quit. Sample #11.",
+    "label": "severe_toxic",
+    "explanation": "Severe repeated abuse and intimidation."
+  },
+  {
+    "text": "You are useless and everyone hates you. Sample #12.",
+    "label": "toxic",
+    "explanation": "Personal abuse and hostile language."
+  },
+  {
+    "text": "I will hurt you if you come here. Sample #12.",
+    "label": "threat",
+    "explanation": "Contains an explicit threat of harm."
+  },
+  {
+    "text": "This is disgusting and obscene. Sample #12.",
+    "label": "obscene",
+    "explanation": "Includes obscene phrasing."
+  },
+  {
+    "text": "People like you should not exist. Sample #12.",
+    "label": "identity_hate",
+    "explanation": "Targets an identity group with hateful language."
+  },
+  {
+    "text": "Thanks for helping me solve this issue. Sample #12.",
+    "label": "safe",
+    "explanation": "Polite and non-toxic statement."
+  },
+  {
+    "text": "You are stupid and incompetent. Sample #12.",
+    "label": "insult",
+    "explanation": "Direct personal insult."
+  },
+  {
+    "text": "I will keep attacking you until you quit. Sample #12.",
+    "label": "severe_toxic",
+    "explanation": "Severe repeated abuse and intimidation."
+  }
+]

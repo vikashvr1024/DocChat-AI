@@ -1,0 +1,27 @@
+BlueOrbit Logistics opened a new warehouse in Pune in 2022.
+The warehouse operates Monday to Saturday from 7:00 AM to 9:00 PM.
+Night shift starts at 10:00 PM and is limited to packaging tasks only.
+Forklift operators must complete safety training every 6 months.
+Remote work is allowed only for planning staff, up to 2 days per week, with supervisor approval.
+Customer support tickets must be acknowledged within 4 hours.
+Perishable goods are stored in Zone C between 2°C and 6°C.
+
+QA
+When did BlueOrbit open the Pune warehouse?
+What are the warehouse operating days and hours?
+What time does the night shift start?
+Which tasks are allowed during night shift?
+Who can work remotely?
+How many remote work days are allowed?
+Whose approval is needed for remote work?
+How often must forklift safety training be completed?
+What is the ticket acknowledgement SLA?
+Where are perishable goods stored?
+What temperature range is required for perishable goods?
+What is the CEO’s name?
+
+Toxicity mode
+Thanks team, great support today.
+You are an idiot.
+I will come and hurt you.
+नमस्ते आप कैसे हो
