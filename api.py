@@ -5,15 +5,11 @@ import time
 from typing import List
 
 import requests
-import torch
 from fastapi import FastAPI, HTTPException
-from peft import PeftModel
 from pydantic import BaseModel, Field
-from transformers import AutoModelForCausalLM, AutoTokenizer
 
 MODEL_NAME = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 ADAPTER_PATH = "./model_output/final_adapter"
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 KNOWN_LABELS = ["severe_toxic", "identity_hate", "obscene", "threat", "insult", "toxic", "safe", "unknown"]
 STOP_WORDS = {
     "what", "when", "where", "which", "does", "from", "with", "that", "this",
@@ -196,19 +192,29 @@ class ModelManager:
     def __init__(self):
         self.tokenizer = None
         self.model = None
+        self.device = "cpu"
+        self.torch = None
         self.load_error = None
         self.adapter_loaded = False
         self._gen_lock = threading.Lock()
 
     def load_model(self):
         try:
+            # Lazy import heavy ML stack so API can bind port quickly on Render.
+            import torch
+            from peft import PeftModel
+            from transformers import AutoModelForCausalLM, AutoTokenizer
+
+            self.torch = torch
+            self.device = "cuda" if torch.cuda.is_available() else "cpu"
+
             self.tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
             self.tokenizer.pad_token = self.tokenizer.eos_token
 
             base_model = AutoModelForCausalLM.from_pretrained(
                 MODEL_NAME,
-                torch_dtype=torch.float16 if DEVICE == "cuda" else torch.float32,
-                device_map="auto" if DEVICE == "cuda" else None,
+                torch_dtype=torch.float16 if self.device == "cuda" else torch.float32,
+                device_map="auto" if self.device == "cuda" else None,
             )
 
             if os.path.exists(ADAPTER_PATH):
@@ -218,7 +224,7 @@ class ModelManager:
                 self.model = base_model
                 self.adapter_loaded = False
 
-            if DEVICE == "cpu":
+            if self.device == "cpu":
                 self.model.to("cpu")
             self.model.eval()
             self.load_error = None
@@ -241,9 +247,9 @@ class ModelManager:
                 return_tensors="pt",
                 truncation=True,
                 max_length=max_input_tokens,
-            ).to(DEVICE)
+            ).to(self.device)
             input_length = inputs["input_ids"].shape[1]
-            with torch.no_grad():
+            with self.torch.no_grad():
                 outputs = self.model.generate(
                     **inputs,
                     max_new_tokens=max_new_tokens,
@@ -308,7 +314,7 @@ def health():
         "adapter_loaded": model_mgr.adapter_loaded,
         "model_name": MODEL_NAME,
         "adapter_path": ADAPTER_PATH,
-        "device": DEVICE,
+        "device": model_mgr.device,
     }
 
 
