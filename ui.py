@@ -4,7 +4,7 @@ import os
 import requests
 import streamlit as st
 
-API_URL = os.getenv("API_URL", "http://127.0.0.1:8000").rstrip("/")
+API_URL = os.getenv("API_URL", "https://docchat-ai-b1mw.onrender.com").rstrip("/")
 REQUEST_TIMEOUT_SEC = int(os.getenv("REQUEST_TIMEOUT_SEC", "60"))
 RETRY_COUNT = int(os.getenv("RETRY_COUNT", "2"))
 QUESTION_STARTERS = {

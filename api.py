@@ -1,8 +1,10 @@
 import os
 import re
 import threading
+import time
 from typing import List
 
+import requests
 import torch
 from fastapi import FastAPI, HTTPException
 from peft import PeftModel
@@ -23,6 +25,9 @@ TOXIC_HINTS = {"kill", "hurt", "hate", "idiot", "stupid", "trash", "loser", "thr
 
 
 app = FastAPI(title="DocChat AI API")
+SELF_PING_URL = "https://docchat-ai-b1mw.onrender.com"
+SELF_PING_INTERVAL_SEC = 14 * 60
+SELF_PING_ENABLED = True
 
 
 def _normalize_space(text: str) -> str:
@@ -194,7 +199,6 @@ class ModelManager:
         self.load_error = None
         self.adapter_loaded = False
         self._gen_lock = threading.Lock()
-        self.load_model()
 
     def load_model(self):
         try:
@@ -256,6 +260,16 @@ class ModelManager:
 model_mgr = ModelManager()
 
 
+def _self_ping_loop():
+    health_url = f"{SELF_PING_URL.rstrip('/')}/health"
+    while True:
+        try:
+            requests.get(health_url, timeout=10)
+        except Exception:
+            pass
+        time.sleep(max(60, SELF_PING_INTERVAL_SEC))
+
+
 class AskRequest(BaseModel):
     document: str = Field(..., min_length=1)
     question: str = Field(..., min_length=1)
@@ -270,6 +284,8 @@ class BatchPredictRequest(BaseModel):
 
 
 def _ensure_model_loaded():
+    if model_mgr.model is None:
+        model_mgr.load_model()
     if model_mgr.model is None:
         detail = f"Model failed to load: {model_mgr.load_error}" if model_mgr.load_error else "Model not loaded."
         raise HTTPException(status_code=503, detail=detail)
@@ -370,6 +386,12 @@ def batch_predict(req: BatchPredictRequest):
     for comment in req.comments:
         results.append(predict_toxicity(PredictRequest(comment=comment)))
     return {"results": results}
+
+
+@app.on_event("startup")
+def startup_tasks():
+    if SELF_PING_ENABLED and SELF_PING_URL:
+        threading.Thread(target=_self_ping_loop, daemon=True).start()
 
 
 if __name__ == "__main__":
