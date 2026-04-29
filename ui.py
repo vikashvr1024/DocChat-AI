@@ -1,14 +1,18 @@
 import time
+import os
 
 import requests
 import streamlit as st
 
-API_URL = "http://localhost:8000"
-REQUEST_TIMEOUT_SEC = 20
-RETRY_COUNT = 2
+API_URL = os.getenv("API_URL", "http://127.0.0.1:8000").rstrip("/")
+REQUEST_TIMEOUT_SEC = int(os.getenv("REQUEST_TIMEOUT_SEC", "60"))
+RETRY_COUNT = int(os.getenv("RETRY_COUNT", "2"))
 QUESTION_STARTERS = {
     "who", "what", "when", "where", "why", "how", "which", "whose",
     "is", "are", "can", "could", "would", "should", "do", "does", "did",
+}
+QA_INTENT_HINTS = {
+    "tell", "explain", "describe", "list", "name", "give", "show", "summarize",
 }
 TOXICITY_HINTS = {
     "kill", "hurt", "hate", "idiot", "stupid", "trash", "loser",
@@ -67,9 +71,12 @@ def infer_auto_mode(prompt: str, has_document: bool) -> str:
     first_word = text.split()[0] if text.split() else ""
     if first_word in QUESTION_STARTERS:
         return "qa"
+    if first_word in QA_INTENT_HINTS:
+        return "qa"
     if any(hint in text for hint in TOXICITY_HINTS):
         return "toxicity"
-    return "toxicity"
+    # In document-enabled auto mode, default to Q&A for neutral text.
+    return "qa"
 
 
 with st.sidebar:

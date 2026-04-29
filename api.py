@@ -51,7 +51,77 @@ def _question_relevant_to_doc(question: str, document: str) -> bool:
     return matches >= 1
 
 
+def _extract_relevant_context(question: str, document: str, top_n: int = 8) -> str:
+    """Score each sentence by keyword overlap with the question and return the top-N
+    most relevant sentences in their original document order.
+
+    This replaces blind truncation so the model always sees focused context, keeping
+    inference fast on CPU and improving answer accuracy on any document.
+    """
+    sentences = re.split(r"(?<=[.!?])\s+", document.strip())
+    if not sentences:
+        return document
+    question_terms = set(_question_terms(question))
+    if not question_terms:
+        # No meaningful query terms — return the document head (most documents
+        # introduce their topic early).
+        return " ".join(sentences[:top_n])
+
+    scored = [
+        (sum(1 for t in question_terms if t in sent.lower()), idx, sent)
+        for idx, sent in enumerate(sentences)
+    ]
+    # Pick top-N by score, resolve ties by preferring earlier sentences.
+    top_indices = {
+        idx for _, idx, _ in sorted(scored, key=lambda x: (-x[0], x[1]))[:top_n]
+    }
+    # Reassemble in original document order for coherent context.
+    return " ".join(sent for idx, sent in enumerate(sentences) if idx in top_indices)
+
+
+def _best_matching_sentence(question: str, document: str) -> str:
+    sentences = re.split(r"(?<=[.!?])\s+", document.strip())
+    if not sentences:
+        return ""
+    question_terms = set(_question_terms(question))
+    if not question_terms:
+        return sentences[0].strip()
+    scored = [
+        (sum(1 for t in question_terms if t in sent.lower()), idx, sent.strip())
+        for idx, sent in enumerate(sentences)
+    ]
+    best_score, _, best_sent = max(scored, key=lambda x: (x[0], -x[1]))
+    return best_sent if best_score > 0 else ""
+
+
+def _fallback_extract_answer(question: str, document: str) -> str:
+    q = question.lower()
+    best_sent = _best_matching_sentence(question, document)
+    if not best_sent:
+        return "Not mentioned in the document."
+
+    if "year" in q or q.startswith("when"):
+        year_match = re.search(r"\b(19|20)\d{2}\b", best_sent)
+        if year_match:
+            return year_match.group(0) + "."
+    return _normalize_space(best_sent).rstrip(".") + "."
+
+
+def _is_fragment(text: str) -> bool:
+    """Detect sentence fragments that are mid-document continuations, not real answers."""
+    if not text:
+        return True
+    # Starts with punctuation typical of a continuation (comma, closing bracket, etc.)
+    if re.match(r'^[,)\];:"\u2019\u201d]', text):
+        return True
+    # Very short (1-2 words) — unlikely to be a complete answer
+    if len(text.split()) < 3:
+        return True
+    return False
+
+
 def _clean_qa_answer(raw: str) -> str:
+    """Strip prompt echo / structural markers and return the first valid answer line."""
     if not raw:
         return ""
     # Models sometimes emit escaped newlines ("\\n"), so normalize first.
@@ -69,7 +139,7 @@ def _clean_qa_answer(raw: str) -> str:
         if not re.match(r"^(question|q)\s*:", line, flags=re.IGNORECASE):
             line = re.sub(r"^\s*(?:answer\s*:\s*)", "", line, flags=re.IGNORECASE)
             cleaned = _normalize_space(line).strip(" .")
-            if cleaned:
+            if cleaned and not _is_fragment(cleaned):
                 return cleaned + "."
     return ""
 
@@ -158,6 +228,7 @@ class ModelManager:
         return self.tokenizer.decode(encoded["input_ids"][0], skip_special_tokens=True)
 
     def generate(self, prompt: str, max_input_tokens: int = 512, max_new_tokens: int = 128) -> str:
+        """Generate text, decoding only newly produced tokens to avoid prompt echo."""
         if self.model is None:
             raise RuntimeError("Model not loaded.")
         with self._gen_lock:
@@ -167,6 +238,7 @@ class ModelManager:
                 truncation=True,
                 max_length=max_input_tokens,
             ).to(DEVICE)
+            input_length = inputs["input_ids"].shape[1]
             with torch.no_grad():
                 outputs = self.model.generate(
                     **inputs,
@@ -174,14 +246,11 @@ class ModelManager:
                     do_sample=False,
                     pad_token_id=self.tokenizer.eos_token_id,
                 )
-            text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
-            if prompt in text:
-                text = text.replace(prompt, "", 1)
-            elif "### Answer:" in text:
-                text = text.split("### Answer:", 1)[-1]
-            elif "### Output:" in text:
-                text = text.split("### Output:", 1)[-1]
-            return text.strip()
+            # Slice off the input tokens — only decode what the model actually generated.
+            # This avoids the prompt-echo bug caused by TinyLlama-Chat's internal
+            # chat template wrapping (output never exactly matches raw `prompt`).
+            new_tokens = outputs[0][input_length:]
+            return self.tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
 
 
 model_mgr = ModelManager()
@@ -238,25 +307,32 @@ def ask_document(req: AskRequest):
     if not question:
         raise HTTPException(status_code=422, detail="Question cannot be empty or whitespace.")
 
-    truncated_document = model_mgr.truncate_for_tokens(document, max_tokens=2000)
-    if not _question_relevant_to_doc(question, truncated_document):
-        return {"answer": "Not mentioned in the document."}
+    # Extract only the sentences most relevant to the question instead of passing
+    # the whole document. This keeps the prompt small (~300-500 tokens), making
+    # inference fast on CPU and giving the model focused context to answer from.
+    MAX_CONTEXT_TOKENS = 700   # budget for the extracted document snippet
+    MAX_INPUT_TOKENS   = 900   # total prompt (context + system prompt + question)
+
+    relevant_context = _extract_relevant_context(question, document)
+    truncated_context = model_mgr.truncate_for_tokens(relevant_context, max_tokens=MAX_CONTEXT_TOKENS)
+
+    question_looks_relevant = _question_relevant_to_doc(question, truncated_context)
 
     prompt = (
         "You are a document question-answering assistant.\n"
         "Answer only from the provided document.\n"
         "If the answer is not in the document, output exactly: Not mentioned in the document.\n\n"
-        f"### Document:\n{truncated_document}\n\n"
+        f"### Document:\n{truncated_context}\n\n"
         f"### Question:\n{question}\n\n"
         "### Answer:"
     )
 
-    raw = model_mgr.generate(prompt, max_input_tokens=512, max_new_tokens=100)
+    raw = model_mgr.generate(prompt, max_input_tokens=MAX_INPUT_TOKENS, max_new_tokens=150)
     cleaned = _clean_qa_answer(raw)
     if not cleaned:
-        return {"answer": "Not mentioned in the document."}
+        return {"answer": _fallback_extract_answer(question, truncated_context if question_looks_relevant else document)}
     if "not mentioned" in cleaned.lower():
-        return {"answer": "Not mentioned in the document."}
+        return {"answer": _fallback_extract_answer(question, truncated_context if question_looks_relevant else document)}
     return {"answer": cleaned}
 
 
